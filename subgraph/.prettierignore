@@ -1,0 +1,9 @@
+*.css
+*.html
+*.min.js
+build/
+dist/
+*.gql
+*.schema.json
+*.json
+

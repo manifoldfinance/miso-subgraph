@@ -1,0 +1,34 @@
+specVersion: 0.0.2
+schema:
+  file: erc20.schema.graphql
+dataSources:
+specVersion: 0.1.0
+description: ERC20 Subgraph for Tokens launched via SushiSwap Miso
+repository: https://github.com/manifoldfinance/miso-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - name: ERC20
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      address: '0xd084944d3c05CD115C09d072B9F44bA3E0E45921'
+      abi: Token
+      startBlock: 12517178 
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: ./src/mappings/events.ts
+      entities:
+        - User
+        - Asset
+        - ERC20Contract
+      abis:
+        - name: Token
+          file: ./abis/token.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer

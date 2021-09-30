@@ -1,0 +1,33 @@
+{
+  "name": "sushiswap-miso-subgraph",
+  "version": "0.0.0",
+  "repository": "https://github.com/manifoldfinnace/miso-subgraph",
+  "license": "MIT",
+  "scripts": {
+    "dev": "npx mustache config/mainnet.json subgraph.template.tpl > subgraph.yaml",
+    "codegen": "npx graph -r dotenv/config codegen --output-dir src/types/",
+    "build": "npx graph build --ipfs https://api.staging.thegraph.com/ipfs/ ",
+    "deploy": "dotenv -- cross-var \"graph deploy %SLUG% --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --access-token %ACCESS_TOKEN%\"",
+    "prettier": "npx prettier —-write '**/*.ts'",
+    "launch": "npm run prepare:mainnet && npm run codegen && npm run build && npm run deploy",
+    "compile": "npx graph codegen",
+    "output": "gnpx raph build",
+    "prod": "npx graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ manifoldfinance/miso-subgraph",
+    "create-local": "npx graph create --node http://localhost:8020/ manifoldfinance/miso-subgraph",
+    "remove-local": "npx graph remove --node http://localhost:8020/ manifoldfinance/miso-subgraph",
+    "deploy-local": "npx graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 manifoldfinance/miso-subgraph"
+  },
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.22.2",
+    "@graphprotocol/graph-ts": "^0.22.1",
+    "@types/node": "^14",
+    "tslib": "^2.3.1",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "@amxx/graphprotocol-utils": "^1.1.0-alpha.0",
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^4.0.0",
+    "mustache": "^4.2.0"
+  }
+}

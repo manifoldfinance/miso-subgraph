@@ -1,0 +1,12 @@
+node_modules
+.env
+src/types
+build/
+package-lock.json
+subgraph.yaml
+.DS_Store
+dist/
+.cache/
+cache/
+artifacts/
+*.min.js
