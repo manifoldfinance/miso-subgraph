@@ -1,64 +1,44 @@
 {
-  "name": "solidity-hardhat-template",
-  "private": true,
-  "version": "0.0.0",
-  "description": "typescript hardhat base with conformant linting",
-  "files": [
-    "/contracts/**/*.sol",
-    "/build/contracts/*.json",
-    "!/contracts/mocks/**/*"
-  ],
+  "name": "@manifoldfinance/fold-subgraph",
+  "version": "1.0.0",
+  "repository": "https://github.com/manifoldfinance/fold-subgraph",
+  "license": "MIT",
   "scripts": {
-    "build": "npx tsc -b",
-    "compile": "npx hardhat compile",
-    "coverage": "npx hardhat coverage",
-    "test": "npx hardhat test",
-    "lint": "npx gts lint",
-    "format": "npx prettier --config prettier.config.js --write .",
-    "clean": "npx gts clean",
-    "fix": "npx gts fix"
+    "codegen": "npx graph codegen --output-dir src/types/",
+    "build": "npx graph build --ipfs https://api.staging.thegraph.com/ipfs/ ",
+    "create-local": "npx graph create $YOUR_SUB_GRAPH --node http://127.0.0.1:8020",
+    "deploy-local": "npx graph deploy $YOUR_SUB_GRAPH --debug --ipfs http://localhost:5001 --node http://127.0.0.1:8020/",
+    "deploy": "npx graph deploy $YOUR_SUB_GRAPH --debug --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/ --access-token $YOUR_GRAPH_ACCESS_TOKEN",
+    "deploy-staging": "npx graph deploy --debug --ipfs https://api.staging.thegraph.com/ipfs/ --node https://api.staging.thegraph.com/deploy/ $YOUR_SUB_GRAPH",
+    "prettier": "npx prettier —-write '**/*.ts'",
+    "launch": "npm run codegen && npm run build && npm run deploy",
+    "production": "dotenv-run-script .env .env.production --",
+    "development": "dotenv-run-script .env .env.development --"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sambacha/solidity-hardhat-template.git"
-  },
-  "keywords": [
-    "solidity",
-    "hardhat",
-    "ethers",
-    "typechain",
-    "ethereum",
-    "smart contracts",
-    "defi"
-  ],
-  "author": "SEE CONTRIBUTORS",
-  "license": "SEE LICENSE IN LICENSE",
-  "bugs": {
-    "url": "https://github.com/sambacha/solidity-hardhat-template/issues"
-  },
-  "homepage": "https://github.com/sambacha/solidity-hardhat-template#readme",
   "devDependencies": {
-    "@ethersproject/abi": "^5.4.1",
-    "@ethersproject/bytes": "^5.4.0",
-    "@ethersproject/providers": "^5.4.5",
-    "@nomiclabs/hardhat-ethers": "2.0.2",
-    "@tenderly/hardhat-tenderly": "1.0.12",
-    "@typechain/ethers-v5": "^7.1.2",
-    "@typechain/hardhat": "^2.3.0",
+    "@graphprotocol/graph-cli": "^0.22.2",
+    "@graphprotocol/graph-ts": "^0.22.1",
     "@types/node": "^14",
-    "dotenv": "10.0.0",
-    "ethers": "5.4.1",
-    "gts": "3.1.0",
-    "hardhat": "2.5.0",
-    "hardhat-abi-exporter": "^2.3.0",
-    "lodash": "^4.17.15",
-    "prettier": "2.3.2",
-    "prettier-config-solidity": "1.5.2",
-    "prettier-plugin-solidity": "1.0.0-beta.17",
-    "ts-generator": "0.1.1",
-    "ts-node": "^10.2.1",
-    "typechain": "^5.1.2",
-    "typescript": "4.3.5"
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "dotenv": "^10.0.0",
+    "dotenv-run-script": "^0.1.0",
+    "eslint": "^6.2.2",
+    "eslint-config-prettier": "^6.1.0",
+    "husky": "^3.0.5",
+    "lint-staged": "^9.2.5",
+    "prettier": "^2.4.1",
+    "typescript": "^3.5.2"
   },
-  "dependencies": {}
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,css,md}": [
+      "prettier --write --config ./.prettierrc",
+      "git add"
+    ]
+  }
 }
