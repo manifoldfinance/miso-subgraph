@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "repository": "https://github.com/manifoldfinance/fold-subgraph",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "codegen": "npx graph codegen --output-dir src/types/",
     "build": "npx graph build --ipfs https://api.staging.thegraph.com/ipfs/ ",
